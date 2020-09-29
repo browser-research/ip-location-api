@@ -1,0 +1,12 @@
+[Unit]
+Description="domain.com"
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/home/domain.com/www
+ExecStart=/home/domain.com/www/.venv/bin/gunicorn -w 1 -b 127.0.0.1:5011 app:app
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

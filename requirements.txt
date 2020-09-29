@@ -1,1 +1,5 @@
+python-dotenv
+flask
+flask-cors
 IP2Location
+uwsgi

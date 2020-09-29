@@ -1,9 +1,24 @@
-from utils.files import setup
+from dotenv import load_dotenv
+from flask import Flask
+
+from utils.GenerateTemp import GenerateTemp
 from utils.IP2LocationHelper import IP2LocationHelper
 
-setup()
+from routes.ping import ping_blueprint
+from routes.ip_location import ip_location_blueprint
 
-# create_IP2LocObj()
-ip2location = IP2LocationHelper()
-print(ip2location.lookup("109.235.70.111"))
-print(ip2location.lookup("37.212.62.156"))
+app = Flask(__name__)
+app.config.from_pyfile('config.py')
+
+# Register blueprints
+app.register_blueprint(ping_blueprint)
+app.register_blueprint(ip_location_blueprint)
+
+# Run setup scripts
+generate_temp = GenerateTemp(app.config["IP2LOCATION_TOKEN"])
+
+# Register Helper
+app.ip2location = IP2LocationHelper()
+
+if __name__ == "__main__":
+    app.run()

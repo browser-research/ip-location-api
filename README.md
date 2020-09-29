@@ -1,3 +1,3 @@
 # ip-location-api
 
-uwsgi --http 127.0.0.1:5011 --module app:app
+gunicorn -w 1 -b 127.0.0.1:5011 app:app
